@@ -18,11 +18,11 @@
 //                       `=---='
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
-const { conn } = require('./src/db.js');
+const { conn } = require('./src/db.js'); // instancia de sequelize
 
-// Syncing all the models at once.
+// Syncing all the models at once: At the same time that the server get´s up, the connection with the database is made
 conn.sync({ force: true }).then(() => {
-  server.listen(3001, () => {
+  server.listen(3001, () => { // puerto 3001
     console.log('%s listening at 3001'); // eslint-disable-line no-console
   });
 });
