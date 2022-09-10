@@ -1,4 +1,4 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes, UUIDV4 } = require('sequelize');
 // Exportamos una funcion que define el modelo
 // Luego el parametro será la conexion a sequelize realizada en db
 module.exports = (sequelize) => {
@@ -15,15 +15,34 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     height : {
-      type: DataTypes.JSON,
+      type: DataTypes.STRING,
       allowNull : false
     },
     weight : {
-      type: DataTypes.JSON,
+      type: DataTypes.STRING,
       allowNull : false
     },
-    life_span : {
+    breedGroup: {
       type: DataTypes.STRING,
+      allowNull: true,
+    },
+    lifeSpan : {
+      type: DataTypes.STRING,
+    },
+    temperament : {
+      type: DataTypes.STRING,
+    },
+    image: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    creadoEnDb: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true,
+      valdiate: {
+        notNull: true,
+      }
     }
   }, {
     // timestamps: false

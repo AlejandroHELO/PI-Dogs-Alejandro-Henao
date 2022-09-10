@@ -1,10 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const {getAllDogs, getByName, getByBreed, postDog} = require('../methods/dogs');
+const { getAllDogsAndByName, getByBreedId, postDog} = require('../methods/dogs');
 
-router.get('/', getAllDogs);
-router.get('?name=', getByName);
-router.get('/:id', getByBreed);
+// router.get('/', getAllDogs);
+router.get('/', getAllDogsAndByName);
+router.get('/:id', getByBreedId);
 router.post('/', postDog);
 // router.put('/', updateDog);
 // router.delete('/', deleteDog);
+
+module.exports = router;
