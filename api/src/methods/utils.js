@@ -58,23 +58,28 @@ const getAllTemps = async (req, res) => {
     const {temp} = req.query;
 
     try {
+
+        const apiDogs = await getMixedInfo();
+        apiDogs.forEach(dog => dog.temperament = dog.temperament.toLowerCase());
+
         if (temp){
             // const apiDogs = await getApiInfo();
             // const apiDogsFiltrados = apiDogs.filter(dog => dog.temperament.includes(temp));
-        
-            // const dogsDb = await Dog.findAll({
-            //     include: {
-            //         model: Temperament,
-            //         where: {
-            //             name: temp
-            //         }
-            //     }
-            // })
-
-            // const allFilterDogs = apiDogsFiltrados.concat(dogsDb);
             
-            const apiDogs = await getMixedInfo();
-            const apiDogsFiltrados = apiDogs.filter(dog => dog.temperament.includes(temp));
+            // const dogsDb = await Dog.findAll({
+                //     include: {
+                    //         model: Temperament,
+                    //         where: {
+                        //             name: temp
+                        //         }
+                        //     }
+                        // })
+                        
+                        // const allFilterDogs = apiDogsFiltrados.concat(dogsDb);
+            
+            // console.log("SOY APIDOGS ", apiDogs)
+
+            const apiDogsFiltrados = apiDogs.filter(dog => dog.temperament.includes(temp.toLowerCase()));
 
             apiDogsFiltrados.length > 0 ? res.status(200).json(apiDogsFiltrados) : res.status(400).send(`No se encontraron dogs con el temperamento ${temp}`);
         } else {

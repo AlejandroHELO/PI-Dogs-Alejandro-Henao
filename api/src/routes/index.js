@@ -11,4 +11,8 @@ const router = Router();
 router.use('/dogs', Dogs),
 router.use('/temperaments', Temperaments)
 
+router.get("*", (req, res) => {
+    res.status(400).send('What are you looking for?')
+})
+
 module.exports = router;

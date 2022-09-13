@@ -10,6 +10,9 @@ const server = express();
 
 server.name = 'API';
 
+//metodo básico para una request
+// server.metodo("/path", (req, res) => {})
+
 server.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 server.use(bodyParser.json({ limit: '50mb' }));
 server.use(cookieParser());

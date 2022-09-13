@@ -19,7 +19,7 @@ const getAllDogsAndByName = async (req, res) => {
         // console.log("Hola soy totalDogs en Minusculas", totalDogs)
         
         if(name){
-            let dogName = totalDogs.filter(dog => dog.name === name.toLowerCase())
+            let dogName = totalDogs.filter(dog => dog.name.includes(name.toLowerCase()))
             // console.log('Soy DOGNAME', dogName);
             dogName.length > 0 ? res.status(200).json(dogName) : res.status(404).json('Dog no encontrado');
         } else {
@@ -94,24 +94,26 @@ const postDog = async (req, res) => {
     try {
         let createDog = await Dog.create({
             name: name,
-            height: height,
-            weight: weight,
+            height: `${height} CM`,
+            weight: `${weight} KG`,
             breedGroup: breedGroup,
-            lifeSpan: lifeSpan,
+            lifeSpan: `${lifeSpan} years`,
             image: image,
             temperament : temperament || "",
             creadoEnDb
         });
     
-        await Temperament.findOrCreate({ 
+        let [dogCreated, creado] = await Temperament.findOrCreate({ 
             where: { name: temperament } 
         })
         // res.json({created: created, Temp});
-        // createDog.addTemperaments(temperamentDb);
+        // let temperamentDb = await Temperament.findAll({ where: { name: temperament } })
+        createDog.addTemperament(dogCreated);
+
         res.status(200).send('Dog creado con éxito');
     } catch(e) {
         console.log(e);
-        res.status(404).send('Error al crear el dog')
+        res.status(406).send('Error al crear el dog')
     }
 };
 
