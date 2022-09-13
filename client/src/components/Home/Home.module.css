@@ -1,0 +1,50 @@
+.Home {
+    background-color: #9bc8df;
+}
+
+.HomeSelectContainer {
+    background-color: #74a0b4;
+    padding: 25px;
+    margin-bottom: 35px;
+    margin-left: 25px;
+    margin-right: 25px;
+    border-radius: 2px;
+}
+
+.HomeSelect {
+    cursor: pointer;
+    width: 130px;
+    height: 30px;
+    margin-right: 15px;
+    color: rgba(22, 21, 21, 0.918);
+}
+
+.HomeContenedorCards {
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: repeat(4, 1fr);
+    background-color: #74a0b4;
+    padding: 20px 5px;
+    margin: 25px;
+}
+
+.CardStylesText {
+    text-decoration: none;
+}
+
+.HomeDogh1 {
+    color: #355a6b;
+    font-size: 40px;
+}
+
+.DivMensajeBusquedaVacia {
+  padding-bottom: 300px;
+}
+
+.CreatedSelect {
+    cursor: pointer;
+    width: 130px;
+    height: 30px;
+    margin-right: 15px;
+    color: rgba(22, 21, 21, 0.918);
+}
