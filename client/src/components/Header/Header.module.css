@@ -1,8 +1,10 @@
 .Header {
     background-color: #2e4855c2;
     margin: 0px;
-    padding: 40px;
+    padding: 20px;
     text-decoration: none;
+    text-align: center;
+    
 }
 
 /* .HeaderDiv {
@@ -32,7 +34,7 @@
     transition: .5s;
 }
 
-.HeaderContainerH1c {
+/* .HeaderContainerH1c {
     display: flex;
     align-items: flex-start;
     display: inline-block;
@@ -41,7 +43,7 @@
     text-decoration: none;
     width: 120px;
     transition: .5s;
-}
+} */
 
 .HeaderContainerH1 h1 {
     text-decoration: none;

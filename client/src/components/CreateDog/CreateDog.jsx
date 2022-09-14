@@ -9,44 +9,44 @@ import styles from './CreateDog.module.css';
 
 const validate = (input) => {
     let errors = {};
-    if (!input.nombre) {
-        errors.nombre = 'Se requiere un nombre';
-    } else if (input.nombre && !/^[A-Z]+$/i.test(input.nombre)) {
-       errors.nombre = 'el campo *Nombre no admite números o simbolos'
-    } else if (input.nombre.length > 25) {
-        errors.nombre = 'el campo *nombre no puede ser mayor a 25 caracteres'
+    if (!input.name) {
+        errors.name = 'Se requiere un nombre';
+    } else if (input.name && !/^[A-Z]+$/i.test(input.name)) {
+        errors.name = 'el campo *Nombre no admite números o simbolos'
+    } else if (input.name.length > 25) {
+        errors.name = 'el campo *Nombre no puede ser mayor a 25 caracteres'
     }
     
     if (!input.alturaMax || !input.alturaMin) {
-        errors.altura = 'Los campos de *Altura min y max son requeridos';
+        errors.height = 'Los campos de *Altura min y max son requeridos';
     } else if (input.alturaMin && !/^[0-9]+$/i.test(input.alturaMin)) {
-        errors.altura = 'El campo *Altura *Min solo admite números';
+        errors.height = 'El campo *Altura *Min solo admite números';
     } else if (input.alturaMax && !/^[0-9]+$/i.test(input.alturaMax)) {
-        errors.altura = 'El campo *Altura *Max solo admite números';
+        errors.height = 'El campo *Altura *Max solo admite números';
     } else if (parseInt(input.alturaMin) < 0 || parseInt(input.alturaMax) > 120) {
-        errors.altura = 'La altura no puede ser menor a 0 ni mayor a 120 cms'
+        errors.height = 'La altura no puede ser menor a 0 ni mayor a 120 cms'
     } else if (parseInt(input.alturaMin) >= parseInt(input.alturaMax)) {
-        errors.altura = 'La altura máxima tiene que ser mayor a la altura minima'
+        errors.height = 'La altura máxima tiene que ser mayor a la altura minima'
     }  else if (!input.pesoMax || !input.pesoMin) {
-        errors.peso = 'Los campos de *Peso min y max son requeridos';
+        errors.weight = 'Los campos de *Peso min y max son requeridos';
     } else if (input.pesoMax && !/^[0-9]+$/i.test(input.pesoMax)) {
-        errors.peso = 'El campo *Peso *Max solo admite números';
+        errors.weight = 'El campo *Peso *Max solo admite números';
     } else if (input.pesoMin && !/^[0-9]+$/i.test(input.pesoMin)) {
-        errors.peso = 'El campo *Peso *Min solo admite números';
+        errors.weight = 'El campo *Peso *Min solo admite números';
     } else if (parseInt(input.pesoMin) < 0 || parseInt(input.pesoMax) > 120) {
-        errors.peso = 'El peso no puede ser menor a 0 Kg ni mayor a 120 Kg'
+        errors.weight = 'El peso no puede ser menor a 0 Kg ni mayor a 120 Kg'
     } else if (parseInt(input.pesoMin) >= parseInt(input.pesoMax)) {
-        errors.peso = 'El peso máximo tiene que ser mayor al peso minimo'
-    } else if (!input.añosDeVida) {
-        errors.años_de_vida = 'El campo *Esperanza de vida es requerido'
-    } else if (!/^[0-9]+$/i.test(input.añosDeVida)) {
-        errors.años_de_vida = 'El campo *Esperanza de vida solo admite números';
-    } else if (parseInt(input.añosDeVida) <= 0 || parseInt(input.añosDeVida) > 30) {
-        errors.años_de_vida = 'La esperanza de vida tiene que ser mayor a 0 y como máximo 30 años';
-    } else if (input.imagen && !/^(ftp|http|https):\/\/[^ "]+$/.test(input.imagen)) {
-        errors.imagen = 'La URL ingresada en el campo *Imagen es incorrecta'
-    } else if (input.imagen.length > 250) {
-        errors.imagen = 'La URL ingresada debe ser menor a 250 caracteres';
+        errors.weight = 'El peso máximo tiene que ser mayor al peso minimo'
+    } else if (!input.lifeSpan) {
+        errors.lifeSpan = 'El campo *Esperanza de vida es requerido'
+    } else if (!/^[0-9]+$/i.test(input.lifeSpan)) {
+        errors.lifeSpan = 'El campo *Esperanza de vida solo admite números';
+    } else if (parseInt(input.lifeSpan) <= 0 || parseInt(input.lifeSpan) > 30) {
+        errors.lifeSpan = 'La esperanza de vida tiene que ser mayor a 0 y como máximo 30 años';
+    } else if (input.image && !/^(ftp|http|https):\/\/[^ "]+$/.test(input.image)) {
+        errors.image = 'La URL ingresada en el campo *Imagen es incorrecta'
+    } else if (input.image.length > 250) {
+        errors.image = 'La URL ingresada debe ser menor a 250 caracteres';
     }
 
     return errors;
@@ -70,17 +70,16 @@ export default function CreateDog (){
     },[dispatch, temperamentos, breeds]);
 
     const [input, setInput] = useState({
-        nombre: "",
-        altura: "",
+        name: "",
+        height: "",
         alturaMin: "",
         alturaMax: "",
-        peso: "",
+        weight: "",
         pesoMin: "",
         pesoMax: "",
-        grupo_raza: "",
-        añosDeVida: "",
-        años_de_vida: "",
-        imagen: "",
+        breedGroup: "",
+        lifeSpan: "",
+        image: "",
         creadoEnDb: true,
         temperamento: []
     })
@@ -90,9 +89,9 @@ export default function CreateDog (){
         setInput((prev) => ({
             ...prev,
             [e.target.name]: e.target.value,
-            altura: `${e.target.name === "alturaMin" ? e.target.value : input.alturaMin} - ${e.target.name === "alturaMax" ? e.target.value : input.alturaMax} CM`,
-            peso: `${e.target.name === "pesoMin" ? e.target.value : input.pesoMin} - ${e.target.name === "pesoMax" ? e.target.value : input.pesoMax} KG`,
-            años_de_vida: `${e.target.name === 'añosDeVida' ? e.target.value : input.añosDeVida} - YEARS`
+            height: `${e.target.name === "alturaMin" ? e.target.value : input.alturaMin} - ${e.target.name === "alturaMax" ? e.target.value : input.alturaMax} CM`,
+            weight: `${e.target.name === "pesoMin" ? e.target.value : input.pesoMin} - ${e.target.name === "pesoMax" ? e.target.value : input.pesoMax} KG`,
+            lifeSpan: `${e.target.name === 'lifeSpan' ? e.target.value : input.lifeSpan} - YEARS`
         }))
         setErrors(() => (validate({
             ...input,
@@ -118,7 +117,7 @@ export default function CreateDog (){
         e.preventDefault();
         setInput((prev) => ({
             ...prev,
-            grupo_raza: e.target.value
+            breedGroup: e.target.value
         }))
     }
 
@@ -131,17 +130,16 @@ export default function CreateDog (){
             dispatch(postDog(input))
             alert("El dog ha sido creado exitosamente")
             setInput(() => ({
-                nombre: "",
-                altura: "",
+                name: "",
+                height: "",
                 alturaMin: 0,
                 alturaMax: 0,
-                peso: "",
+                weight: "",
                 pesoMin: 0,
                 pesoMax: 0,
-                grupo_raza: "",
-                añosDeVida: 0,
-                años_de_vida: "",
-                imagen: "",
+                breedGroup: "",
+                lifeSpan: 0,
+                image: "",
                 creadoEnDb: true,
                 temperamento: []
             }))
@@ -167,13 +165,13 @@ export default function CreateDog (){
                         <label>*Nombre:</label>
                         <input
                         type="text"
-                        value={input.nombre}
-                        name="nombre"
+                        value={input.name}
+                        name="name"
                         onChange={(e) => handleChange(e)}
                         />
                         {
-                            errors.nombre && (
-                                <p className={styles.danger}>{errors.nombre}</p>
+                            errors.name && (
+                                <p className={styles.danger}>{errors.name}</p>
                             )
                         }
                     </div>
@@ -192,8 +190,8 @@ export default function CreateDog (){
                         name="alturaMax"
                         onChange={(e) => handleChange(e)}/>
                         {
-                            errors.altura && (
-                                <p className={styles.danger}>{errors.altura}</p>
+                            errors.height && (
+                                <p className={styles.danger}>{errors.height}</p>
                             )
                         }
                     </div>
@@ -213,8 +211,8 @@ export default function CreateDog (){
                         onChange={(e) => handleChange(e)}
                         />
                         {
-                            errors.peso && (
-                                <p className={styles.danger}>{errors.peso}</p>
+                            errors.weight && (
+                                <p className={styles.danger}>{errors.weight}</p>
                             )
                         }
                     </div>
@@ -233,13 +231,13 @@ export default function CreateDog (){
                         <label>*Esperanza de vida: </label>
                         <input 
                         type="text"
-                        value={input.añosDeVida}
-                        name="añosDeVida"
+                        value={input.lifeSpan}
+                        name="lifeSpan"
                         onChange={(e) => handleChange(e)}
                         /><span> (Años)</span>
                         {
-                            errors.años_de_vida && (
-                                <p className={styles.danger}>{errors.años_de_vida}</p>
+                            errors.lifeSpan && (
+                                <p className={styles.danger}>{errors.lifeSpan}</p>
                             )
                         }
                     </div>
@@ -247,13 +245,13 @@ export default function CreateDog (){
                         <label>Imagen:</label>
                         <input 
                         type="text"
-                        value={input.imagen}
-                        name="imagen"
+                        value={input.image}
+                        name="image"
                         onChange={(e) => handleChange(e)}
                         />
                         {
-                            errors.imagen && (
-                                <p className={styles.danger}>{errors.imagen}</p>
+                            errors.image && (
+                                <p className={styles.danger}>{errors.image}</p>
                             )
                         }
                     </div>
@@ -261,7 +259,7 @@ export default function CreateDog (){
                         <label>Temperamentos:</label>
                         <select multiple onChange={(e) => handleSelect(e)}>
                             {temperamentos && temperamentos.map(t => (
-                            <option name={t.nombre} value={t.nombre} key={t.nombre}>{t.nombre}</option>  
+                            <option name={t.name} value={t.name} key={t.name}>{t.name}</option>  
                             ))}
                         </select>
                     </div>

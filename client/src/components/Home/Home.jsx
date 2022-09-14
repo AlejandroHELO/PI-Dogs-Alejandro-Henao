@@ -86,40 +86,40 @@ export default function Home() {
             </div>
             <div>
                 <div className={styles.HomeSelectContainer}>
-                <select className={styles.HomeSelect} name='nombres' id='alphabetical' onChange={e => handleOrderName(e)}>
-                    <option key="asc" value= 'asc'>A - Z</option>
-                    <option key="desc" value= 'desc'>Z - A</option>
-                </select>
-                <select className={styles.HomeSelect} name='peso' id='weight' ref={text_default} onChange={e => handleOrderByWeight(e)}>
-                    <option key="AllPeso" value= 'AllPeso'>All</option>
-                    <option key="pesoMayor" value= 'pesoMayor'>Greater weight</option>
-                    <option key="pesoMenor" value= 'pesoMenor'>Lower weight</option>
-                </select>
-                <select className={styles.HomeSelect} name='temperamentos' id='temperaments' ref={text_default} onChange={e => handleFilterTemperaments(e)}>
-                    <option key="AllTemperaments" value='AllTemperaments'>All</option>
-                    {                           
-                        allTemperaments && allTemperaments.map(temperament => {
-                            return (
-                                <option key={temperament.name} value= {temperament.name}>{temperament.name}</option>
-                            )
-                        })
-                    }
-                </select>
-                <select className={styles.HomeSelect} name='razas' id='breeds' ref={text_default} onChange={e => handleFilterBreeds(e)}>
-                    <option key="allRazas" value='allRazas'>All breeds</option>
-                    {
-                        allBreeds && allBreeds.map(breed => {
-                            return (
-                                <option key={breed} value= {breed}>{breed}</option>
-                            )
-                        })
-                    }
-                </select>
-                <select className={styles.CreatedSelect} onChange={e => handleFilterDbApi(e)}>
-                    <option name='All' key="AllCreate" value='All'>All</option>
-                    <option name='InApi' key="InApi" value="InApi">Api</option>
-                    <option name='Created' key="Created" value="Created">Created</option>
-                </select>
+                    <select className={styles.HomeSelect} name='nombres' id='alphabetical' onChange={e => handleOrderName(e)}>
+                        <option key="asc" value= 'asc'>A - Z</option>
+                        <option key="desc" value= 'desc'>Z - A</option>
+                    </select>
+                    <select className={styles.HomeSelect} name='peso' id='weight' ref={text_default} onChange={e => handleOrderByWeight(e)}>
+                        <option key="AllPeso" value= 'AllPeso'>All Weights</option>
+                        <option key="pesoMayor" value= 'pesoMayor'>Greater weight</option>
+                        <option key="pesoMenor" value= 'pesoMenor'>Lower weight</option>
+                    </select>
+                    <select className={styles.HomeSelect} name='temperamentos' id='temperaments' ref={text_default} onChange={e => handleFilterTemperaments(e)}>
+                        <option key="AllTemperaments" value='AllTemperaments'>All Temperaments</option>
+                        {   allTemperaments && allTemperaments.map(temperament => {
+                                return (
+                                    <option key={temperament.name} value= {temperament.name}>{temperament.name}</option>
+                                )
+                            })
+                        }
+                    </select>
+                    <select className={styles.HomeSelect} name='razas' id='breeds' ref={text_default} onChange={e => handleFilterBreeds(e)}>
+                        <option key="allRazas" value='allRazas'>All Breeds Groups</option>
+                        {
+                            allBreeds && allBreeds.map(breed => {
+                                return (
+                                    <option key={breed} value= {breed}>{breed}</option>
+                                )
+                            })
+                        }
+                    </select>
+                    <select className={styles.CreatedSelect} onChange={e => handleFilterDbApi(e)}>
+                        <option name='Origin'>Origin</option>
+                        <option name='All' key="AllCreate" value='All'>All</option>
+                        <option name='InApi' key="InApi" value="InApi">Api</option>
+                        <option name='Created' key="Created" value="Created">Created</option>
+                    </select>
                 </div>
                 <h1 className={styles.HomeDogh1}>Dogs breeds</h1>
                 <div className={styles.HomeContenedorCards}>
@@ -128,8 +128,8 @@ export default function Home() {
                         return (
                             <div key={dog.id}>
                                 <Link className={styles.CardStylesText} to={`/home/${dog.id}`}>
-                                <Card imagen={dog.image} nombre={dog.name} grupo_raza={dog.breedGroup} 
-                                temperamentos={!dog.creadoEnDb ? dog.temperament : dog.temperament.map(el => " " + el.name).toString().slice(1)} peso={dog.weight} />
+                                <Card image={dog.image} name={dog.name} breedGroup={dog.breedGroup} 
+                                temperaments ={!dog.creadoEnDb ? dog.temperament : dog.temperament.map(el => " " + el.name).toString().slice(1)} weight={dog.weight} />
                                 </Link>
                             </div>
                         )    
