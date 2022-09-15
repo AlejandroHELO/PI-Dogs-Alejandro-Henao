@@ -73,7 +73,7 @@ const rootReducer = (state = initialState, action) => {
             }      
         case FILTER_BY_BREEDS:
             const allDogs = state.allDogs;
-            const breedsFilter = action.payload === 'allRazas' ? allDogs : allDogs.filter( d => d.breadGroup === action.payload);
+            const breedsFilter = action.payload === 'allRazas' ? allDogs : allDogs.filter( d => d.breedGroup === action.payload);
             return {
                 ...state,
                 dogs: breedsFilter
@@ -83,7 +83,7 @@ const rootReducer = (state = initialState, action) => {
             const filterDog = action.payload === 'AllTemperaments' ? all_Dogs : action.payload;
             return {
                 ...state,
-            dogs: filterDog
+                dogs: filterDog
             }
         case FILTER_DB_API:
             const filtro = action.payload === 'Created' ? state.allDogs.filter(d => d.creadoEnDb) : state.allDogs.filter(d => !d.creadoEnDb);
@@ -99,11 +99,10 @@ const rootReducer = (state = initialState, action) => {
             if (action.payload === 'AllPeso') {
                 ordenadoPorPeso = JSON.parse(JSON.stringify(state.allDogs));
             } else {
-                    ordenadoPorPeso = action.payload === 'pesoMenor' ? 
-                    copia.sort((a, b) => {return parseInt(a.weight) - parseInt(b.weight)}) 
-                    :
-                    copia.sort((a, b) => {return parseInt(b.weight) - parseInt(a.weight)});
-                    
+                ordenadoPorPeso = action.payload === 'pesoMenor' ? 
+                copia.sort((a, b) => {return parseInt(a.weight) - parseInt(b.weight)}) 
+                :
+                copia.sort((a, b) => {return parseInt(b.weight) - parseInt(a.weight)});
             }
             return {
                 ...state,

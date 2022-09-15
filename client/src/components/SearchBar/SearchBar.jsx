@@ -13,7 +13,7 @@ export default function SearchBar() {
     const handleInputChange = (e) => {
         e.preventDefault();
         setInput(e.target.value);
-        console.log(input);
+        // console.log(input);
     }
 
     const handleSubmit = (e) => {

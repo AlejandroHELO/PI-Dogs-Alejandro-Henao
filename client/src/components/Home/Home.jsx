@@ -20,14 +20,14 @@ export default function Home() {
     const allTemperaments = useSelector ((state) => state.temperaments);
     const allBreeds = useSelector((state) => state.breeds);
     //const [selectFilterByBreeds, setSelectFilterByBreeds] = useState('');
-    const [render, setRender] = useState('');
+    const [, setRender] = useState('');
     const [currentPage, setCurrentPage] = useState(1); //inicio estado local pagina actual
-    const [dogsPerPage, setDogPerPage] = useState(8); // inicio estado local perros x pagina
+    const [dogsPerPage, ] = useState(8); // inicio estado local perros x pagina
     const indexOfLastDog = currentPage * dogsPerPage; // pagactual * perros por pagina //indice del ultimo dog de mi pagina
     const indexOfFirstDog = indexOfLastDog - dogsPerPage; // indice del primer dog
-    // al arreglo donde tengo todos los dogs -->allDogs(que esta conectado al store)
+    // al arreglo donde tengo todos los dogs --> allDogs(que esta conectado al store)
     // lo parto con el slice pasandole el indice del primer dog y el ultimo de cada pagina
-    const currentDogs = allDogs.slice(indexOfFirstDog, indexOfLastDog); 
+    const currentDogs = allDogs.slice(indexOfFirstDog, indexOfLastDog);
 
     const text_default = useRef();
 
@@ -35,15 +35,14 @@ export default function Home() {
         setCurrentPage(pageNumber);
     }
 
-
-    //esto es lo mismo al mapDispatchToProps(dispatch)
-    // hace como un componentDidMount() o componentDidUpdate()
     useEffect (() => {
         dispatch(getTemperaments())
         dispatch(getBreeds())
         dispatch(getDogs())
     },[dispatch]);
-
+    //esto es lo mismo al mapDispatchToProps(dispatch)
+    //hace como un componentDidMount() o componentDidUpdate()
+    
     let handleFilterBreeds = (e) => {
         e.preventDefault();
         dispatch(filterDogsByBreeds(e.target.value));
@@ -52,6 +51,7 @@ export default function Home() {
     }
 
     let handleFilterTemperaments = (e) => {
+        console.log('SOY TARGET VALUE', e.target.value)
         e.preventDefault();
         dispatch(filterDogsByTemperament(e.target.value));
         setCurrentPage(1);
@@ -72,7 +72,7 @@ export default function Home() {
     }
 
     let handleFilterDbApi = (e) => {
-        console.log(e.target.value)
+        //console.log(e.target.value)
         e.preventDefault();
         dispatch(FilterDbApi(e.target.value))
         setCurrentPage(1);
@@ -95,7 +95,7 @@ export default function Home() {
                         <option key="pesoMayor" value= 'pesoMayor'>Greater weight</option>
                         <option key="pesoMenor" value= 'pesoMenor'>Lower weight</option>
                     </select>
-                    <select className={styles.HomeSelect} name='temperamentos' id='temperaments' ref={text_default} onChange={e => handleFilterTemperaments(e)}>
+                    <select className={styles.HomeSelect} name='temperaments' id='temperaments' ref={text_default} onChange={e => handleFilterTemperaments(e)}>
                         <option key="AllTemperaments" value='AllTemperaments'>All Temperaments</option>
                         {   allTemperaments && allTemperaments.map(temperament => {
                                 return (
@@ -115,8 +115,7 @@ export default function Home() {
                         }
                     </select>
                     <select className={styles.CreatedSelect} onChange={e => handleFilterDbApi(e)}>
-                        <option name='Origin'>Origin</option>
-                        <option name='All' key="AllCreate" value='All'>All</option>
+                        <option name='All' key="AllCreate" value='All'>All Origins</option>
                         <option name='InApi' key="InApi" value="InApi">Api</option>
                         <option name='Created' key="Created" value="Created">Created</option>
                     </select>
@@ -129,7 +128,7 @@ export default function Home() {
                             <div key={dog.id}>
                                 <Link className={styles.CardStylesText} to={`/home/${dog.id}`}>
                                 <Card image={dog.image} name={dog.name} breedGroup={dog.breedGroup} 
-                                temperaments ={!dog.creadoEnDb ? dog.temperament : dog.temperament.map(el => " " + el.name).toString().slice(1)} weight={dog.weight} />
+                                temperaments = { dog.creadoEnDb ? dog.temperaments.map(el => " " + el.name).toString().slice(1): dog.temperament} weight={dog.weight} />
                                 </Link>
                             </div>
                         )    

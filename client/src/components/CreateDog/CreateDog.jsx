@@ -11,7 +11,7 @@ const validate = (input) => {
     let errors = {};
     if (!input.name) {
         errors.name = 'Se requiere un nombre';
-    } else if (input.name && !/^[A-Z]+$/i.test(input.name)) {
+    } else if (input.name && !/^[A-Za-z\s]+$/g.test(input.name)) {
         errors.name = 'el campo *Nombre no admite números o simbolos'
     } else if (input.name.length > 25) {
         errors.name = 'el campo *Nombre no puede ser mayor a 25 caracteres'
@@ -42,7 +42,7 @@ const validate = (input) => {
     } else if (!/^[0-9]+$/i.test(input.lifeSpan)) {
         errors.lifeSpan = 'El campo *Esperanza de vida solo admite números';
     } else if (parseInt(input.lifeSpan) <= 0 || parseInt(input.lifeSpan) > 30) {
-        errors.lifeSpan = 'La esperanza de vida tiene que ser mayor a 0 y como máximo 30 años';
+        errors.lifeSpan = 'La esperanza de vida debe ser mayor a 0 y máximo de 30 años';
     } else if (input.image && !/^(ftp|http|https):\/\/[^ "]+$/.test(input.image)) {
         errors.image = 'La URL ingresada en el campo *Imagen es incorrecta'
     } else if (input.image.length > 250) {
@@ -81,17 +81,15 @@ export default function CreateDog (){
         lifeSpan: "",
         image: "",
         creadoEnDb: true,
-        temperamento: []
+        temperaments: []
     })
 
     const handleChange = (e) => {
         e.preventDefault();
-        setInput((prev) => ({
-            ...prev,
-            [e.target.name]: e.target.value,
-            height: `${e.target.name === "alturaMin" ? e.target.value : input.alturaMin} - ${e.target.name === "alturaMax" ? e.target.value : input.alturaMax} CM`,
-            weight: `${e.target.name === "pesoMin" ? e.target.value : input.pesoMin} - ${e.target.name === "pesoMax" ? e.target.value : input.pesoMax} KG`,
-            lifeSpan: `${e.target.name === 'lifeSpan' ? e.target.value : input.lifeSpan} - YEARS`
+        setInput((prev) => ({ ...prev, [e.target.name]: e.target.value, 
+        height: `${e.target.name === "alturaMin" ? e.target.value : input.alturaMin} - ${e.target.name === "alturaMax" ? e.target.value : input.alturaMax}`,
+        weight: `${e.target.name === "pesoMin" ? e.target.value : input.pesoMin} - ${e.target.name === "pesoMax" ? e.target.value : input.pesoMax}`,
+        // lifeSpan: `${e.target.name === 'lifeSpan' ? e.target.value : input.lifeSpan} - YEARS`,
         }))
         setErrors(() => (validate({
             ...input,
@@ -101,16 +99,18 @@ export default function CreateDog (){
     }
 
     const handleSelect = (e) => {
-            if (input.temperamento.includes(e.target.value) || input.temperamento.length >= 10) {
-                setInput((prev) => ({
-                    ...prev
-                }))
-            } else {
-                setInput((prev) => ({
-                    ...prev,
-                    temperamento: [...input.temperamento, e.target.value]
-                }))
-            } 
+        //  
+        if (input.temperaments.includes(e.target.value) || input.temperaments.length >= 10) {
+            setInput((prev) => ({
+                ...prev,
+                temperaments: [...input.temperaments]
+            }))
+        } else {
+            setInput((prev) => ({
+                ...prev,
+                temperaments: [...input.temperaments, e.target.value]
+            }))
+        } 
     };
 
     const handleSelectBreed = (e) => {
@@ -138,10 +138,10 @@ export default function CreateDog (){
                 pesoMin: 0,
                 pesoMax: 0,
                 breedGroup: "",
-                lifeSpan: 0,
+                lifeSpan: "",
                 image: "",
                 creadoEnDb: true,
-                temperamento: []
+                temperaments: []
             }))
             history.push("/home");
         }
@@ -150,7 +150,7 @@ export default function CreateDog (){
     const handleDelete = (temp) => {
         setInput((prev) => ({
             ...prev,
-            temperamento: input.temperamento.filter(t => t !== temp)
+            temperaments: input.temperaments.filter(t => t !== temp)
         }))
     }
 
@@ -250,9 +250,7 @@ export default function CreateDog (){
                         onChange={(e) => handleChange(e)}
                         />
                         {
-                            errors.image && (
-                                <p className={styles.danger}>{errors.image}</p>
-                            )
+                            errors.image && ( <p className={styles.danger}>{errors.image}</p>)
                         }
                     </div>
                     <div className={styles.DivTemperamentos1}>
@@ -266,10 +264,10 @@ export default function CreateDog (){
                     <button className={Object.entries(errors).length > 0 ? styles.ButtonCreateOff : styles.ButtonCreateOn } type="submit">Crear Dog</button>
                 </form>
                 {
-                    input.temperamento.length > 0 && <p>(Recuerda que puedes agregar hasta 10 temperamentos)</p>
+                    input.temperaments.length > 0 && <p>(Recuerda que puedes agregar hasta 10 temperamentos)</p>
                 }
                 {
-                    input.temperamento && input.temperamento.map(temp => (
+                    input.temperaments && input.temperaments.map(temp => (
                         <div className={styles.divButtonTemps} key={`${temp} a`}>
                             <button className={styles.ButtonTemperaments}onClick={() => handleDelete(temp)}>{temp} </button>
                         </div>

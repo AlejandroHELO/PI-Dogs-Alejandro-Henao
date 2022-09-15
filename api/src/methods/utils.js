@@ -1,5 +1,5 @@
 const axios = require('axios');
-const {Dog, Temperament} = require('../db');
+const {Dog, Temperaments} = require('../db');
 const { API_KEY } = process.env;
 
 const getApiInfo = async () => {
@@ -28,7 +28,7 @@ const getDbInfo = async () => {
     try {
         let db = await Dog.findAll({
             include: {
-                model: Temperament,
+                model: Temperaments,
                 attributes: ['name'],
                 through: { attributes: []}
             }
@@ -58,30 +58,11 @@ const getAllTemps = async (req, res) => {
     const {temp} = req.query;
 
     try {
-
-        const apiDogs = await getMixedInfo();
-        apiDogs.forEach(dog => dog.temperament = dog.temperament.toLowerCase());
-
+        const totalDogs = await getMixedInfo();
         if (temp){
-            // const apiDogs = await getApiInfo();
-            // const apiDogsFiltrados = apiDogs.filter(dog => dog.temperament.includes(temp));
-            
-            // const dogsDb = await Dog.findAll({
-                //     include: {
-                    //         model: Temperament,
-                    //         where: {
-                        //             name: temp
-                        //         }
-                        //     }
-                        // })
-                        
-                        // const allFilterDogs = apiDogsFiltrados.concat(dogsDb);
-            
-            // console.log("SOY APIDOGS ", apiDogs)
+            const totalDogsFiltrados = totalDogs.filter(dog => dog.temperament.toLowerCase().includes(temp.toLowerCase()));
 
-            const apiDogsFiltrados = apiDogs.filter(dog => dog.temperament.includes(temp.toLowerCase()));
-
-            apiDogsFiltrados.length > 0 ? res.status(200).json(apiDogsFiltrados) : res.status(400).send(`No se encontraron dogs con el temperamento ${temp}`);
+            totalDogsFiltrados.length > 0 ? res.status(200).json(totalDogsFiltrados) : res.status(400).send(`No se encontraron dogs con el temperamento ${temp}`);
         } else {
             const tempsApi = await axios(`https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`)
             let tempsSinDividir = tempsApi.data.map(dog => dog.temperament);
@@ -89,12 +70,12 @@ const getAllTemps = async (req, res) => {
             let tempsFinal = tempsSinDividir.toString().replace(/ /g, "").split(',');
             
             tempsFinal.forEach(temp => {
-                Temperament.findOrCreate({
+                Temperaments.findOrCreate({
                     where: { name: temp }
                 })
             })
 
-            const allTemperaments = await Temperament.findAll();
+            const allTemperaments = await Temperaments.findAll();
             // console.log ("HOLA SOY allTemperaments", allTemperaments)
             res.json(allTemperaments);
         }

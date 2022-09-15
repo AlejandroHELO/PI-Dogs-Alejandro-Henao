@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
     // defino el modelo
-    sequelize.define('Temperament', {
+    sequelize.define('temperaments', {
         name : {
             type: DataTypes.STRING,
             unique: true

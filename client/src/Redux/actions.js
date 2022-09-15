@@ -128,7 +128,7 @@ export function filterDogsByTemperament (temp){
             })
         }else {
             try {
-                let json = await axios.get(`http://localhost:3001/dogs/temperaments?temp=${temp}`);
+                let json = await axios.get(`http://localhost:3001/temperaments?temp=${temp}`);
                 return dispatch({
                     type: FILTER_BY_TEMPERAMENTS,
                     payload: json.data
