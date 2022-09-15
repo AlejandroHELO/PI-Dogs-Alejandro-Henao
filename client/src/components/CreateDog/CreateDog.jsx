@@ -89,7 +89,6 @@ export default function CreateDog (){
         setInput((prev) => ({ ...prev, [e.target.name]: e.target.value, 
         height: `${e.target.name === "alturaMin" ? e.target.value : input.alturaMin} - ${e.target.name === "alturaMax" ? e.target.value : input.alturaMax}`,
         weight: `${e.target.name === "pesoMin" ? e.target.value : input.pesoMin} - ${e.target.name === "pesoMax" ? e.target.value : input.pesoMax}`,
-        // lifeSpan: `${e.target.name === 'lifeSpan' ? e.target.value : input.lifeSpan} - YEARS`,
         }))
         setErrors(() => (validate({
             ...input,
@@ -99,8 +98,7 @@ export default function CreateDog (){
     }
 
     const handleSelect = (e) => {
-        //  
-        if (input.temperaments.includes(e.target.value) || input.temperaments.length >= 10) {
+        if (input.temperaments.length >= 10) {
             setInput((prev) => ({
                 ...prev,
                 temperaments: [...input.temperaments]

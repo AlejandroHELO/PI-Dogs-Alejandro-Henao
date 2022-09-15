@@ -19,7 +19,7 @@ export default function Home() {
     const allDogs = useSelector ((state) => state.dogs);
     const allTemperaments = useSelector ((state) => state.temperaments);
     const allBreeds = useSelector((state) => state.breeds);
-    //const [selectFilterByBreeds, setSelectFilterByBreeds] = useState('');
+    
     const [, setRender] = useState('');
     const [currentPage, setCurrentPage] = useState(1); //inicio estado local pagina actual
     const [dogsPerPage, ] = useState(8); // inicio estado local perros x pagina
@@ -40,14 +40,13 @@ export default function Home() {
         dispatch(getBreeds())
         dispatch(getDogs())
     },[dispatch]);
-    //esto es lo mismo al mapDispatchToProps(dispatch)
+    //equivalente al mapDispatchToProps(dispatch)
     //hace como un componentDidMount() o componentDidUpdate()
     
     let handleFilterBreeds = (e) => {
         e.preventDefault();
         dispatch(filterDogsByBreeds(e.target.value));
         setCurrentPage(1);
-        //setSelectFilterByBreeds(e.target.value);
     }
 
     let handleFilterTemperaments = (e) => {

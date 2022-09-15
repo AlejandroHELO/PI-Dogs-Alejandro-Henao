@@ -20,24 +20,24 @@ const rootReducer = (state = initialState, action) => {
                 dogs: action.payload,
                 allDogs: action.payload
             }
-            case GET_TEMPERAMENTS:
-                let temperaments_purificados = action.payload.filter(el => el.name !== null && el.name !== undefined && 
-                    el.name !== '' && el.id !== 37 && el.id !== 40 && el.id !== 20);
+        case GET_TEMPERAMENTS:
+            let temperaments_purificados = action.payload.filter(el => el.name !== null && el.name !== undefined && 
+            el.name !== '');
                     
-                temperaments_purificados = temperaments_purificados.sort((a, b) => {
-                    if (a.name > b.name) {
-                        return 1;
-                    }
-                    if (b.name > a.name) {
-                        return -1;
-                    }
-                    return 0;
-                }) 
-                return {
-                    ...state,
-                    temperaments: temperaments_purificados
+            temperaments_purificados = temperaments_purificados.sort((a, b) => {
+                if (a.name > b.name) {
+                    return 1;
                 }
-            case GET_BREEDS:
+                if (b.name > a.name) {
+                    return -1;
+                }
+                return 0;
+            }) 
+            return {
+                ...state,
+                temperaments: temperaments_purificados
+            }
+        case GET_BREEDS:
             let breeds_array = action.payload.filter(el => el !== null && el !== undefined && el !== '');
             breeds_array = breeds_array.sort((a, b) => {
                 if (a > b) {
